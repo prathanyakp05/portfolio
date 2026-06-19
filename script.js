@@ -1,32 +1,28 @@
 /* ==========================================================================
-   PORTFOLIO INTERACTIVE CONTROLLER
+   IDE PORTFOLIO SCRIPT CONTROLLER
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
-    initMobileMenu();
     initTypewriter();
-    initScrollSpyAndHeader();
-    initTabs();
+    initSmoothScroll();
     initIntersectionObservers();
     initProjectsModal();
-    initContactForm();
+    initTerminal();
     initBackToTop();
 });
 
 /* ==========================================================================
-   THEME TOGGLER (DARK / LIGHT MODE)
+   THEME SWITCHER (DARK / LIGHT IDE THEMES)
    ========================================================================== */
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
 
-    // Check saved theme or system settings
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         body.className = savedTheme;
     } else {
-        // Default to dark theme
         body.className = 'dark-theme';
     }
 
@@ -34,42 +30,22 @@ function initTheme() {
         if (body.classList.contains('dark-theme')) {
             body.classList.replace('dark-theme', 'light-theme');
             localStorage.setItem('theme', 'light-theme');
-            showToast('☀️ Switched to Light Theme');
+            showToast('☀️ Switched to GitHub Light Theme');
         } else {
             body.classList.replace('light-theme', 'dark-theme');
             localStorage.setItem('theme', 'dark-theme');
-            showToast('🌙 Switched to Dark Theme');
+            showToast('🌙 Switched to One Dark Pro Theme');
         }
     });
 }
 
 /* ==========================================================================
-   MOBILE MENU TOGGLE
-   ========================================================================== */
-function initMobileMenu() {
-    const toggleBtn = document.getElementById('mobile-menu-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    toggleBtn.addEventListener('click', () => {
-        toggleBtn.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    // Close menu when link is clicked
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            toggleBtn.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-}
-
-/* ==========================================================================
-   HERO TYPOWRITER EFFECT
+   HERO TYPING ANIMATION
    ========================================================================== */
 function initTypewriter() {
     const textElement = document.getElementById('typewriter-text');
+    if (!textElement) return;
+
     const phrases = [
         'Software Engineer',
         'Generative AI Developer',
@@ -87,23 +63,20 @@ function initTypewriter() {
         if (isDeleting) {
             textElement.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex--;
-            typingSpeed = 50; // Deleting is faster
+            typingSpeed = 50;
         } else {
             textElement.textContent = currentPhrase.substring(0, charIndex + 1);
             charIndex++;
             typingSpeed = 100;
         }
 
-        // Typing finished
         if (!isDeleting && charIndex === currentPhrase.length) {
             isDeleting = true;
-            typingSpeed = 1500; // Pause at end of word
-        } 
-        // Deletion finished
-        else if (isDeleting && charIndex === 0) {
+            typingSpeed = 1500; // Pause at end
+        } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            typingSpeed = 500; // Pause before typing next word
+            typingSpeed = 500; // Pause before next
         }
 
         setTimeout(type, typingSpeed);
@@ -113,102 +86,45 @@ function initTypewriter() {
 }
 
 /* ==========================================================================
-   HEADER SCROLL & ACTIVE NAV SPY
+   SMOOTH SCROLL FOR HERO ACTION
    ========================================================================== */
-function initScrollSpyAndHeader() {
-    const header = document.querySelector('.header');
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-link');
+function initSmoothScroll() {
+    const btnViewWork = document.getElementById('btn-view-work');
+    const secProjects = document.getElementById('sec-projects');
 
-    window.addEventListener('scroll', () => {
-        const scrollPos = window.scrollY;
-
-        // Shrink header background
-        if (scrollPos > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-
-        // Scroll Spy active sections
-        sections.forEach(sec => {
-            const top = sec.offsetTop - 120;
-            const height = sec.offsetHeight;
-            const id = sec.getAttribute('id');
-
-            if (scrollPos >= top && scrollPos < top + height) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${id}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
+    if (btnViewWork && secProjects) {
+        btnViewWork.addEventListener('click', () => {
+            secProjects.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            showToast('📂 Scrolled to projects');
         });
-    });
+    }
 }
 
 /* ==========================================================================
-   ABOUT TABS (EDUCATION VS CERTIFICATIONS)
-   ========================================================================== */
-function initTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetTab = btn.getAttribute('data-tab');
-
-            // Deactivate all
-            tabButtons.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-
-            // Activate target
-            btn.classList.add('active');
-            document.getElementById(`tab-${targetTab}`).classList.add('active');
-        });
-    });
-}
-
-/* ==========================================================================
-   SCROLL REVEAL & SKILLS PROGRESS ANIMATION
+   SCROLL INTERSECTIONS (SKILLS PROGRESS SWEEPS)
    ========================================================================== */
 function initIntersectionObservers() {
-    // 1. Reveal sections on scroll
-    const fadeSections = document.querySelectorAll('.fade-in-section');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); // Trigger once
-            }
-        });
-    }, {
-        threshold: 0.15
-    });
+    const skillsSection = document.getElementById('sec-skills');
+    const progressFills = document.querySelectorAll('.sm-fill');
 
-    fadeSections.forEach(section => revealObserver.observe(section));
-
-    // 2. Animate skill progress bars
-    const skillsSection = document.getElementById('skills');
-    const progressFills = document.querySelectorAll('.progress-fill');
-    
     const skillsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 progressFills.forEach(fill => {
-                    const width = fill.style.width;
-                    // Reset to 0 then fill to trigger animation
+                    const width = fill.parentElement.previousElementSibling.children[1].textContent;
                     fill.style.width = '0';
                     setTimeout(() => {
                         fill.style.width = width;
-                    }, 50);
+                    }, 100);
                 });
                 skillsObserver.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.2
+        threshold: 0.15
     });
 
     if (skillsSection) {
@@ -217,7 +133,7 @@ function initIntersectionObservers() {
 }
 
 /* ==========================================================================
-   PROJECTS DRAWER MODAL SYSTEM
+   PROJECT DETAILS OVERLAY DRAWER
    ========================================================================== */
 function initProjectsModal() {
     const modal = document.getElementById('project-modal');
@@ -229,27 +145,27 @@ function initProjectsModal() {
     const projectData = {
         'waste-detection': {
             title: 'Real-Time Waste Detection & Alert System',
-            subtitle: 'Environmental Protection & Computer Vision Solution',
-            desc: 'Developed an automated visual monitoring framework designed to locate floating and submerged plastics/debris inside rivers and coastal borders. Utilizing integrated camera feeds, the system triggers swift alerts to localized municipal departments for fast waste recovery.',
+            subtitle: 'Java / OpenCV / IoT Webhooks',
+            desc: 'Developed a robust automated detection network that isolates floating and submerged trash items in river channels and coastal borders. Analyzes real-time image packets, triggering direct alarms to regional clean-up teams for prompt debris recovery.',
             features: [
-                'Object Identification: Built using custom models tuned to isolate floating garbage types.',
-                'Submerged Analytics: Integrates custom color distortion filters to recognize debris underwater.',
-                'Alert Mechanisms: Automated Webhook APIs triggering text/email notifications to environmental response units.',
-                'Interactive dashboard showing local coordinates and historical garbage volume graphs.'
+                'Computer Vision Integration: Custom color filters for detecting submerged plastics.',
+                'Instant Webhooks: Automated alerts sent to environmental containment squads.',
+                'Data Logging: Track trash accumulation stats over time.',
+                'Highly responsive notification grid for local authorities.'
             ],
-            tech: ['Java', 'OpenCV', 'IoT Webhooks', 'Spring Boot', 'MySQL', 'CSS Grid']
+            tech: ['Java', 'OpenCV', 'IoT Webhooks', 'Spring Boot', 'MySQL']
         },
         'invoice-extraction': {
             title: 'Intelligent Invoice Extraction System',
-            subtitle: 'AI Document Parsing & OCR Pipeline',
-            desc: 'A smart web platform engineered to import raw, unstructured billing files (PDF/JPG) and execute OCR extraction. Utilizing fine-tuned Prompt Engineering and Generative AI, it parses specific items (like vendor names, totals, and line items) automatically, dumping structured tables straight into a secure database.',
+            subtitle: 'Python / GenAI / Spring Boot',
+            desc: 'An AI-driven parsing portal designed to import invoice files (PDF/images), run optical character recognition (OCR), and parse critical entities (vendor details, taxation figures, items) using fine-tuned Prompt Engineering and Generative AI, dumping structured tables directly into databases.',
             features: [
-                'Zero-shot Invoice Recognition: Adapts to diverse invoicing layouts without needing manual templates.',
-                'Advanced Prompt Engineering: Optimized system prompts reducing data extraction errors by 90%.',
-                'Spring Boot Middleware: Robust RESTful endpoints executing tasks asynchronously.',
-                'CSV & JSON Downloader: Export formatted tables instantly for corporate ledger integration.'
+                'Adaptive Form Parsing: Extracts fields accurately without needing fixed layout coordinates.',
+                'Zero-shot Entity Extraction: Flexibly pulls key-value pairs from complex vendor tables.',
+                'Spring Boot Middleware: Runs asynchronous parsing tasks securely.',
+                'Export Utilities: Download organized data as CSV or JSON arrays.'
             ],
-            tech: ['Python', 'Generative AI', 'Spring Boot', 'OCR APIs', 'React (Frontend mock)', 'MySQL']
+            tech: ['Python', 'Generative AI', 'Spring Boot', 'OCR APIs', 'MySQL']
         }
     };
 
@@ -272,7 +188,7 @@ function initProjectsModal() {
             <span class="modal-project-subtitle">${data.subtitle}</span>
             <p class="modal-project-desc">${data.desc}</p>
             
-            <h4 class="modal-project-subheading">Key Specifications</h4>
+            <h4 class="modal-project-subheading">Specifications</h4>
             <ul class="modal-project-list">
                 ${featuresHtml}
             </ul>
@@ -284,7 +200,7 @@ function initProjectsModal() {
         `;
 
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Lock background scroll
+        document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
@@ -302,69 +218,77 @@ function initProjectsModal() {
     closeBtn.addEventListener('click', closeModal);
     backdrop.addEventListener('click', closeModal);
 
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
     });
 }
 
 /* ==========================================================================
-   TOAST SYSTEM & CONTACT FORM SUBMIT
+   INTERACTIVE SHELL / TERMINAL SIMULATOR
    ========================================================================== */
-const toastContainer = document.getElementById('toast-container');
+function initTerminal() {
+    const input = document.getElementById('terminal-input');
+    const history = document.getElementById('terminal-history');
+    const body = document.getElementById('terminal-body');
 
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `<span>${message}</span>`;
-    
-    toastContainer.appendChild(toast);
-    
-    // Auto-remove after 4 seconds
-    setTimeout(() => {
-        toast.classList.add('removing');
-        toast.addEventListener('animationend', () => {
-            toast.remove();
-        });
-    }, 4000);
-}
+    if (!input || !history || !body) return;
 
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
+    const commands = {
+        'help': 'Available commands: <span class="keyword">about</span>, <span class="keyword">skills</span>, <span class="keyword">projects</span>, <span class="keyword">contact</span>, <span class="keyword">clear</span>',
+        'about': 'Prathanya P. | Aspiring Software Engineer | B.Sc. Computer Systems & Design | CGPA: 7.4. Passionate about backend development, software QA, and leveraging GenAI pipelines.',
+        'skills': 'Technical skills: <span class="string">Java, Spring Boot, MySQL, HTML, CSS, JavaScript</span>. Soft skills: <span class="string">Strategic Planning, Teamwork, Leadership</span>.',
+        'projects': 'Featured Projects:<br>1. <span class="keyword">waste-detection</span>: Real-time alert system for water debris.<br>2. <span class="keyword">invoice-extraction</span>: Intelligent parser using Generative AI.',
+        'contact': 'Reach me at:<br>- Phone: <span class="string">9894390455</span><br>- Email: <span class="string">Prathanyakp@gmail.com</span><br>- GitHub: <span class="string">github.com/prathanyakp05</span><br>- LinkedIn: <span class="string">linkedin.com/in/prathanya-k-p-a673b9373/</span>'
+    };
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        // Simulating sending animation
-        submitBtn.innerHTML = '<span>Sending...</span>';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            showToast('✉️ Message Sent Successfully! I will reply shortly.');
-            form.reset();
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const rawVal = input.value.trim();
+            const cmd = rawVal.toLowerCase();
+            input.value = '';
+
+            if (cmd === '') return;
+
+            // Output command prompt line
+            const promptLine = document.createElement('div');
+            promptLine.className = 'term-line';
+            promptLine.innerHTML = `<span class="prompt">guest@prathanya:~$</span> ${rawVal}`;
+            history.appendChild(promptLine);
+
+            // Execute commands
+            const outputLine = document.createElement('div');
+            outputLine.className = 'term-line';
+
+            if (cmd === 'clear') {
+                history.innerHTML = '';
+                return;
+            } else if (commands[cmd]) {
+                outputLine.innerHTML = commands[cmd];
+            } else {
+                outputLine.className = 'term-line error';
+                outputLine.innerHTML = `command not found: "${rawVal}". Type "help" for options.`;
+            }
+
+            history.appendChild(outputLine);
             
-            // Reset floating labels
-            const inputs = form.querySelectorAll('.form-input');
-            inputs.forEach(input => {
-                input.blur();
-            });
+            // Auto scroll to bottom
+            body.scrollTop = body.scrollHeight;
+        }
+    });
 
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
+    // Keep focus on input if terminal is clicked
+    body.addEventListener('click', () => {
+        input.focus();
     });
 }
 
 /* ==========================================================================
-   BACK TO TOP BUTTON
+   BACK TO TOP CONTROLS
    ========================================================================== */
 function initBackToTop() {
     const btn = document.getElementById('back-to-top');
-    
+    if (!btn) return;
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 400) {
             btn.classList.add('active');
@@ -379,4 +303,26 @@ function initBackToTop() {
             behavior: 'smooth'
         });
     });
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION ENGINE
+   ========================================================================== */
+const toastContainer = document.getElementById('toast-container');
+
+function showToast(message) {
+    if (!toastContainer) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<span>${message}</span>`;
+    
+    toastContainer.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('removing');
+        toast.addEventListener('animationend', () => {
+            toast.remove();
+        });
+    }, 3000);
 }
