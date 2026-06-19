@@ -448,10 +448,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-container {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     width: 100%;
 }
 
@@ -482,18 +483,20 @@ h1, h2, h3, h4, h5, h6 {
 .hero-description {
     font-size: 1.125rem;
     color: var(--text-secondary);
-    max-width: 540px;
+    max-width: 720px;
     margin-bottom: 40px;
 }
 
 .hero-cta {
     display: flex;
+    justify-content: center;
     gap: 16px;
     margin-bottom: 40px;
 }
 
 .hero-socials {
     display: flex;
+    justify-content: center;
     gap: 20px;
 }
 
@@ -506,86 +509,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-color);
     transform: translateY(-3px);
 }
-
-/* Hero Visual: Code Editor Mockup */
-.hero-visual {
-    display: flex;
-    justify-content: center;
-}
-
-.profile-card-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-}
-
-.profile-card-wrapper::before {
-    content: '';
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    width: 100%;
-    height: 100%;
-    border: 2px dashed var(--border-color);
-    border-radius: var(--border-radius-md);
-    z-index: -1;
-}
-
-.profile-card {
-    background: #0f1423;
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    width: 100%;
-}
-
-.light-theme .profile-card {
-    background: #1e293b;
-    color: #f8fafc;
-}
-
-.code-header {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.code-header .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.code-header .red { background-color: #ff5f56; }
-.code-header .yellow { background-color: #ffbd2e; }
-.code-header .green { background-color: #27c93f; }
-
-.window-title {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-left: 8px;
-}
-
-.light-theme .window-title {
-    color: #94a3b8;
-}
-
-.code-content {
-    padding: 24px;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    overflow-x: auto;
-}
-
-.code-content .keyword { color: var(--code-keyword); }
-.code-content .variable { color: var(--code-variable); }
-.code-content .string { color: var(--code-string); }
-.code-content .comment { color: var(--code-comment); }
 
 /* Typewriter animation styles */
 .cursor {
