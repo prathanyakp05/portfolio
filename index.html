@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prathanya Panneerselvam | Portfolio</title>
-    <meta name="description" content="Premium personal portfolio of Prathanya Panneerselvam - Aspiring Software Engineer specializing in Generative AI, Java, and Spring Boot.">
-    <meta name="keywords" content="Prathanya Panneerselvam, Software Engineer, Portfolio, HTML, CSS, JS, Spring Boot, Java, GenAI">
+    <meta name="description" content="Premium three-page interactive portfolio of Prathanya Panneerselvam - Aspiring Software Engineer specializing in Generative AI, Java, and Spring Boot.">
+    <meta name="keywords" content="Prathanya Panneerselvam, Software Engineer, Portfolio, Java, Spring Boot, Generative AI">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,38 +17,47 @@
 </head>
 <body class="dark-theme">
 
-    <!-- 1. SPLASH SCREEN (LANDING GATEKEEPER) -->
-    <div id="splash-screen" class="splash-screen">
-        <div class="splash-overlay"></div>
-        <div class="splash-card">
-            <span class="splash-welcome">👋 Welcome to my digital space</span>
-            <h1 class="splash-name">Prathanya Panneerselvam</h1>
-            <h2 class="splash-title">
+    <!-- ==========================================================================
+       VIEW 1: HOME PAGE (SPLASH / GATEKEEPER SCREEN)
+       ========================================================================== -->
+    <div id="page-home" class="page-view home-view">
+        <div class="view-overlay"></div>
+        <div class="home-content container">
+            <span class="home-badge">👋 Welcome to my digital portfolio</span>
+            <h1 class="home-name">Prathanya Panneerselvam</h1>
+            <h2 class="home-title">
                 I am an <span class="typewriter" id="typewriter-text"></span><span class="cursor">&nbsp;</span>
             </h2>
-            <p class="splash-desc">
-                Aspiring Software Engineer focused on backend development, software quality assurance, and Generative AI prompt pipelines.
+            <p class="home-desc">
+                Aspiring Software Engineer focused on backend engineering, software quality assurance, and Generative AI prompt pipelines.
             </p>
-            <button id="btn-enter" class="btn btn-primary btn-glowing">
-                <span>View My Work</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
+            <div class="home-actions">
+                <button id="btn-view-work" class="btn btn-primary btn-glowing">
+                    <span>View My Work</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+                <button id="btn-contact-me" class="btn btn-secondary btn-glowing">
+                    <span>Contact Me</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- 2. MAIN PORTFOLIO BODY (Initially hidden, revealed on click) -->
-    <div id="portfolio-content" class="portfolio-content hidden">
-        
+    <!-- ==========================================================================
+       VIEW 2: RESUME PAGE (MY WORK)
+       ========================================================================== -->
+    <div id="page-resume" class="page-view resume-view hidden">
         <!-- Navigation Header -->
         <header class="header">
             <div class="header-container">
-                <a href="#portfolio-content" class="logo">
+                <a href="#" class="logo nav-route" data-target="home">
                     <span class="logo-accent">&lt;</span>Prathanya<span class="logo-accent">/&gt;</span>
                 </a>
                 
-                <nav class="nav-menu" id="nav-menu">
+                <nav class="nav-menu" id="nav-menu-resume">
                     <ul class="nav-list">
-                        <li><a href="#sec-contact" class="nav-link">Contact</a></li>
+                        <li><a href="#" class="nav-link nav-route" data-target="home">Home</a></li>
                         <li><a href="#sec-summary" class="nav-link">Summary</a></li>
                         <li><a href="#sec-skills" class="nav-link">Skills</a></li>
                         <li><a href="#sec-education" class="nav-link">Education</a></li>
@@ -57,29 +66,16 @@
                         <li><a href="#sec-publications" class="nav-link">Papers</a></li>
                         <li><a href="#sec-internships" class="nav-link">Internships</a></li>
                         <li><a href="#sec-memberships" class="nav-link">Memberships</a></li>
+                        <li><a href="#" class="nav-link nav-route" data-target="contact">Contact</a></li>
                     </ul>
                 </nav>
 
                 <div class="nav-actions">
-                    <!-- Light/Dark Mode Switcher -->
-                    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
-                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
+                    <button class="theme-toggle-btn theme-toggle-action" aria-label="Toggle Theme">
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                     </button>
-                    <!-- Mobile Hamburger -->
-                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
+                    <button class="mobile-menu-toggle mobile-menu-action" data-target="nav-menu-resume" aria-label="Open navigation menu">
                         <span class="bar"></span>
                         <span class="bar"></span>
                         <span class="bar"></span>
@@ -88,41 +84,10 @@
             </div>
         </header>
 
-        <!-- Main Content Area -->
-        <main class="container main-container">
-            
-            <!-- SECTION 1: CONTACT INFO -->
-            <section id="sec-contact" class="portfolio-section fade-in-section">
-                <div class="section-title-wrapper">
-                    <span class="section-emoji">📞</span>
-                    <h2 class="section-heading">Contact Details</h2>
-                </div>
-                <div class="contact-grid">
-                    <a href="tel:9894390455" class="contact-card border-glow">
-                        <div class="card-icon-wrapper">📱</div>
-                        <span class="contact-title">Phone Number</span>
-                        <span class="contact-value">9894390455</span>
-                    </a>
-                    <a href="mailto:Prathanyakp@gmail.com" class="contact-card border-glow">
-                        <div class="card-icon-wrapper">✉️</div>
-                        <span class="contact-title">Email Address</span>
-                        <span class="contact-value">Prathanyakp@gmail.com</span>
-                    </a>
-                    <a href="https://github.com/prathanyakp05" target="_blank" rel="noopener noreferrer" class="contact-card border-glow">
-                        <div class="card-icon-wrapper">🐙</div>
-                        <span class="contact-title">GitHub Profile</span>
-                        <span class="contact-value">prathanyakp05</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/prathanya-k-p-a673b9373/" target="_blank" rel="noopener noreferrer" class="contact-card border-glow">
-                        <div class="card-icon-wrapper">💼</div>
-                        <span class="contact-title">LinkedIn Connection</span>
-                        <span class="contact-value">prathanya-k-p</span>
-                    </a>
-                </div>
-            </section>
-
-            <!-- SECTION 2: PROFESSIONAL SUMMARY -->
-            <section id="sec-summary" class="portfolio-section fade-in-section">
+        <!-- Resume Main Container -->
+        <main class="container page-content">
+            <!-- Summary -->
+            <section id="sec-summary" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">📝</span>
                     <h2 class="section-heading">Summary</h2>
@@ -135,14 +100,13 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: SKILLS -->
-            <section id="sec-skills" class="portfolio-section fade-in-section">
+            <!-- Skills -->
+            <section id="sec-skills" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">⚡</span>
                     <h2 class="section-heading">Skills</h2>
                 </div>
                 <div class="skills-grid">
-                    <!-- Technical Stack Card -->
                     <div class="skills-card border-glow">
                         <h3 class="skills-subtitle">💻 Technical Stack</h3>
                         <div class="skills-list">
@@ -165,9 +129,8 @@
                         </div>
                     </div>
 
-                    <!-- Soft Skills Card -->
                     <div class="skills-card border-glow center-flex">
-                        <h3 class="skills-subtitle">🤝 Domain & Qualities</h3>
+                        <h3 class="skills-subtitle">🤝 Core Qualities</h3>
                         <div class="chips-container">
                             <div class="soft-chip border-glow">
                                 <span class="chip-emoji">🎯</span>
@@ -186,14 +149,13 @@
                 </div>
             </section>
 
-            <!-- SECTION 4: EDUCATION -->
-            <section id="sec-education" class="portfolio-section fade-in-section">
+            <!-- Education -->
+            <section id="sec-education" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">🎓</span>
                     <h2 class="section-heading">Education</h2>
                 </div>
                 <div class="education-timeline">
-                    <!-- Timeline Card 1 -->
                     <div class="edu-card border-glow">
                         <div class="edu-header">
                             <h3 class="edu-institution">🏫 Kongu Engineering College, Perundurai</h3>
@@ -201,8 +163,6 @@
                         </div>
                         <p class="edu-details">Computer Systems and Design</p>
                     </div>
-
-                    <!-- Timeline Card 2 -->
                     <div class="edu-card border-glow">
                         <div class="edu-header">
                             <h3 class="edu-institution">🏫 Higher Secondary School</h3>
@@ -210,8 +170,6 @@
                         </div>
                         <p class="edu-details">Green Garden Matric.Hr.Sec.School</p>
                     </div>
-
-                    <!-- Timeline Card 3 -->
                     <div class="edu-card border-glow">
                         <div class="edu-header">
                             <h3 class="edu-institution">🏫 Secondary School</h3>
@@ -222,37 +180,34 @@
                 </div>
             </section>
 
-            <!-- SECTION 5: PROJECTS -->
-            <section id="sec-projects" class="portfolio-section fade-in-section">
+            <!-- Projects -->
+            <section id="sec-projects" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">💻</span>
                     <h2 class="section-heading">Featured Projects</h2>
                 </div>
                 <div class="projects-grid">
-                    <!-- Project 1 -->
                     <div class="project-box border-glow">
                         <div class="p-header-row">
                             <h3>Real-Time Waste Detection & Alert System</h3>
                             <span class="p-badge">Java / OpenCV</span>
                         </div>
-                        <p class="p-desc">An automated environmental surveillance system using image analytics and color threshold grids to detect submerged & floating trash in water resources, triggering localized alerts.</p>
+                        <p class="p-desc">Automated system identifying submerged & floating river waste via image analytics, dispatching real-time warnings to eco authorities.</p>
                         <button class="btn btn-text open-modal-btn" data-project="waste-detection">View Specifications &rarr;</button>
                     </div>
-
-                    <!-- Project 2 -->
                     <div class="project-box border-glow">
                         <div class="p-header-row">
                             <h3>Intelligent Invoice Extraction System</h3>
                             <span class="p-badge">AI / Spring Boot</span>
                         </div>
-                        <p class="p-desc">A smart parsing pipeline using Generative AI LLM prompts and OCR triggers to capture and structure payment details from raw invoice PDFs directly into databases.</p>
+                        <p class="p-desc">Generative AI document parsing pipeline that captures data from raw bills automatically into database tables.</p>
                         <button class="btn btn-text open-modal-btn" data-project="invoice-extraction">View Specifications &rarr;</button>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 6: ADDITIONAL COURSES -->
-            <section id="sec-courses" class="portfolio-section fade-in-section">
+            <!-- Courses -->
+            <section id="sec-courses" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">📚</span>
                     <h2 class="section-heading">Additional Courses</h2>
@@ -263,12 +218,12 @@
                         <span class="course-badge">6 Months</span>
                     </div>
                     <p class="course-sub">Java + AI Course | Blue Ball Technology, Chennai</p>
-                    <p class="course-desc">Rigorous technical bootcamp specializing in Java backend development, Spring architectures, and Generative AI prompts engineering integrations.</p>
+                    <p class="course-desc">bootcamp specializing in backend Java routing architectures, Spring services setups, and prompt optimization logic.</p>
                 </div>
             </section>
 
-            <!-- SECTION 7: PAPER PUBLICATIONS -->
-            <section id="sec-publications" class="portfolio-section fade-in-section">
+            <!-- Publications -->
+            <section id="sec-publications" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">📄</span>
                     <h2 class="section-heading">Paper Publications</h2>
@@ -277,33 +232,30 @@
                     <div class="paper-card border-glow">
                         <div class="paper-icon">🏛️</div>
                         <h3>National Institute of Technology (NIT) Uttarakhand</h3>
-                        <p>Research paper presentation and publication detailing computing concepts and verification methodologies.</p>
+                        <p>Published technical paper detailing computer systems architectures and logical flow diagrams.</p>
                     </div>
                     <div class="paper-card border-glow">
                         <div class="paper-icon">🏛️</div>
                         <h3>KSR College of Engineering, Tamil Nadu</h3>
-                        <p>Research paper publication outlining structural designs, logical algorithms, and database setup modules.</p>
+                        <p>Published paper detailing algorithm design configurations and system optimizations parameters.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 8: INTERNSHIPS -->
-            <section id="sec-internships" class="portfolio-section fade-in-section">
+            <!-- Internships -->
+            <section id="sec-internships" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">💼</span>
                     <h2 class="section-heading">Internships</h2>
                 </div>
                 <div class="intern-timeline">
-                    <!-- Internship 1 -->
                     <div class="intern-card border-glow">
                         <div class="intern-header-row">
                             <h3>Software Engineer Intern</h3>
                             <span class="intern-company">Merida Tech Minds, Bangalore</span>
                         </div>
-                        <p class="intern-desc">Contributed directly to backend engineering API tasks, structured SQL tables, executed test scripts, and conducted QA quality sweeps.</p>
+                        <p class="intern-desc">Contributed directly to backend engineering API tasks, structured SQL tables, executed test scripts, and conducted QA sweeps.</p>
                     </div>
-
-                    <!-- Internship 2 -->
                     <div class="intern-card border-glow">
                         <div class="intern-header-row">
                             <h3>Technical Intern</h3>
@@ -314,8 +266,8 @@
                 </div>
             </section>
 
-            <!-- SECTION 9: MEMBERSHIPS -->
-            <section id="sec-memberships" class="portfolio-section fade-in-section">
+            <!-- Memberships -->
+            <section id="sec-memberships" class="resume-section fade-in-section">
                 <div class="section-title-wrapper">
                     <span class="section-emoji">🎖️</span>
                     <h2 class="section-heading">Memberships</h2>
@@ -333,25 +285,122 @@
                     </div>
                 </div>
             </section>
-
         </main>
-
+        
         <!-- Footer -->
         <footer class="footer">
             <div class="container footer-container">
-                <p class="copyright">&copy; 2026 Prathanya Panneerselvam. All Rights Reserved.</p>
+                <p>&copy; 2026 Prathanya Panneerselvam. All Rights Reserved.</p>
                 <div class="footer-links">
-                    <a href="https://github.com/prathanyakp05" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://www.linkedin.com/in/prathanya-k-p-a673b9373/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="#" class="nav-route" data-target="home">Home</a>
+                    <a href="#" class="nav-route" data-target="contact">Contact</a>
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- Back to Top Trigger -->
-    <button id="back-to-top" class="back-to-top" aria-label="Scroll to top">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-    </button>
+    <!-- ==========================================================================
+       VIEW 3: CONTACT PAGE
+       ========================================================================== -->
+    <div id="page-contact" class="page-view contact-view hidden">
+        <!-- Navigation Header -->
+        <header class="header">
+            <div class="header-container">
+                <a href="#" class="logo nav-route" data-target="home">
+                    <span class="logo-accent">&lt;</span>Prathanya<span class="logo-accent">/&gt;</span>
+                </a>
+                
+                <nav class="nav-menu" id="nav-menu-contact">
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link nav-route" data-target="home">Home</a></li>
+                        <li><a href="#" class="nav-link nav-route" data-target="resume">View My Work</a></li>
+                        <li><a href="#" class="nav-link nav-route active" data-target="contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="nav-actions">
+                    <button class="theme-toggle-btn theme-toggle-action" aria-label="Toggle Theme">
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                    <button class="mobile-menu-toggle mobile-menu-action" data-target="nav-menu-contact" aria-label="Open navigation menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contact Main Container -->
+        <main class="container page-content">
+            <section class="resume-section">
+                <div class="section-title-wrapper justify-center">
+                    <span class="section-emoji shaking-element">📬</span>
+                    <h2 class="section-heading">Contact Me</h2>
+                </div>
+                
+                <div class="contact-page-layout">
+                    <!-- Cards Panel -->
+                    <div class="contact-info-panel">
+                        <div class="contact-grid-vertical">
+                            <a href="tel:9894390455" class="contact-card border-glow">
+                                <div class="card-icon-wrapper">📱</div>
+                                <span class="contact-title">Phone</span>
+                                <span class="contact-value">9894390455</span>
+                            </a>
+                            <a href="mailto:Prathanyakp@gmail.com" class="contact-card border-glow">
+                                <div class="card-icon-wrapper">✉️</div>
+                                <span class="contact-title">Email</span>
+                                <span class="contact-value">Prathanyakp@gmail.com</span>
+                            </a>
+                            <a href="https://github.com/prathanyakp05" target="_blank" rel="noopener noreferrer" class="contact-card border-glow">
+                                <div class="card-icon-wrapper">🐙</div>
+                                <span class="contact-title">GitHub</span>
+                                <span class="contact-value">prathanyakp05</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/prathanya-k-p-a673b9373/" target="_blank" rel="noopener noreferrer" class="contact-card border-glow">
+                                <div class="card-icon-wrapper">💼</div>
+                                <span class="contact-title">LinkedIn</span>
+                                <span class="contact-value">prathanya-k-p</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Message Form Panel -->
+                    <div class="contact-form-panel border-glow">
+                        <h3 class="form-title">✉️ Drop a Message</h3>
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="form-name" required placeholder=" " class="form-input">
+                                <label for="form-name" class="form-label">Your Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="form-email" required placeholder=" " class="form-input">
+                                <label for="form-email" class="form-label">Your Email</label>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="form-message" required placeholder=" " class="form-input" rows="4"></textarea>
+                                <label for="form-message" class="form-label">Your Message</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block btn-glowing">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container footer-container">
+                <p>&copy; 2026 Prathanya Panneerselvam. All Rights Reserved.</p>
+                <div class="footer-links">
+                    <a href="#" class="nav-route" data-target="home">Home</a>
+                    <a href="#" class="nav-route" data-target="resume">View My Work</a>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <!-- Specifications Detail Modal -->
     <div id="project-modal" class="modal">
@@ -362,10 +411,10 @@
         </div>
     </div>
 
-    <!-- Custom Alerts Container -->
+    <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- JavaScript Controller -->
+    <!-- JS script -->
     <script src="script.js"></script>
 </body>
 </html>

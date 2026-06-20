@@ -1,59 +1,57 @@
 /* ==========================================================================
-   DESIGN VARIABLES & GENERAL THEMES
+   DESIGN VARIABLES & GLOBAL THEMES
    ========================================================================== */
 :root {
     /* Fonts */
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Outfit', sans-serif;
-    --font-mono: 'Fira Code', 'Courier New', monospace;
+    --font-mono: 'Courier New', Courier, monospace;
 
     /* Transitions */
     --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.45s cubic-bezier(0.1, 1, 0.1, 1);
-
-    /* Dimensions */
+    --transition-slow: 0.5s cubic-bezier(0.1, 1, 0.1, 1);
+    
     --header-height: 80px;
     --border-radius-sm: 8px;
     --border-radius-md: 16px;
     --border-radius-lg: 24px;
-    --max-width: 1000px;
+    --max-width: 1100px;
 }
 
-/* Dark Theme Variables */
+/* Dark Mode Variables */
 .dark-theme {
-    --bg-primary: #080b11;
-    --bg-secondary: #0c101a;
-    --bg-card: rgba(255, 255, 255, 0.025);
+    --bg-primary: #070a13;
+    --bg-secondary: #0c1020;
+    --bg-card: rgba(0, 0, 0, 0.6);
     
-    --border-color: rgba(255, 255, 255, 0.07);
-    --border-color-active: rgba(255, 255, 255, 0.18);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color-active: rgba(255, 255, 255, 0.22);
     
-    --text-primary: #94a3b8;
+    --text-primary: #cbd5e1;
     --text-header: #f8fafc;
-    --text-secondary: #64748b;
-    --text-muted: #475569;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
     
     --accent-color: #a855f7;
     --accent-color-rgb: 168, 85, 247;
     --accent-blue: #3b82f6;
     --accent-green: #10b981;
-    --accent-orange: #f97316;
     
-    --shadow-color: rgba(0, 0, 0, 0.5);
+    --shadow-color: rgba(0, 0, 0, 0.6);
     --bg-grid: rgba(255, 255, 255, 0.015);
     
-    --splash-gradient: linear-gradient(135deg, rgba(8, 11, 17, 0.95), rgba(8, 11, 17, 0.85));
+    --overlay-color: rgba(7, 10, 19, 0.85);
 }
 
-/* Light Theme Variables */
+/* Light Mode Variables */
 .light-theme {
     --bg-primary: #f8fafc;
     --bg-secondary: #f1f5f9;
-    --bg-card: rgba(255, 255, 255, 0.75);
+    --bg-card: rgba(255, 255, 255, 0.85);
     
-    --border-color: rgba(0, 0, 0, 0.06);
-    --border-color-active: rgba(0, 0, 0, 0.16);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-color-active: rgba(0, 0, 0, 0.18);
     
     --text-primary: #334155;
     --text-header: #0f172a;
@@ -64,16 +62,15 @@
     --accent-color-rgb: 124, 58, 237;
     --accent-blue: #2563eb;
     --accent-green: #059669;
-    --accent-orange: #ea580c;
     
-    --shadow-color: rgba(15, 23, 42, 0.06);
+    --shadow-color: rgba(15, 23, 42, 0.08);
     --bg-grid: rgba(0, 0, 0, 0.015);
     
-    --splash-gradient: linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(248, 250, 252, 0.88));
+    --overlay-color: rgba(248, 250, 252, 0.85);
 }
 
 /* ==========================================================================
-   RESET & BASICS
+   RESET & GLOBAL BASE STYLES
    ========================================================================== */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -125,64 +122,82 @@ button {
     padding: 0 24px;
 }
 
-/* Main content workspace grid overlay background */
-.portfolio-content {
-    background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: center;
-    position: relative;
-    padding-bottom: 80px;
-}
-
 /* ==========================================================================
-   1. SPLASH SCREEN (LANDING GATEKEEPER)
+   PAGE ROUTING & PARALLAX BACKGROUNDS
    ========================================================================== */
-.splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('bg.png');
+.page-view {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: transform var(--transition-slow) cubic-bezier(0.1, 1, 0.1, 1), opacity var(--transition-slow);
+    background-attachment: fixed; /* Parallax effect */
+    display: flex;
+    flex-direction: column;
 }
 
-.splash-overlay {
+.page-view.hidden {
+    display: none !important;
+}
+
+/* Specific background images mapped to views */
+.home-view {
+    background-image: url('bg_home.jpg');
+}
+
+.resume-view {
+    background-image: url('bg_resume.png');
+}
+
+.contact-view {
+    background-image: url('bg_contact.png');
+}
+
+/* Background grid overlay patterns on inner pages */
+.resume-view, .contact-view {
+    background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px),
+                      url('bg_resume.png'); /* Fallback order */
+    background-size: 40px 40px, 40px 40px, cover;
+}
+
+.contact-view {
+    background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px),
+                      url('bg_contact.png');
+}
+
+/* Overlay covering details backgrounds */
+.view-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--splash-gradient);
-    backdrop-filter: blur(2px);
+    background: var(--overlay-color);
     z-index: 1;
 }
 
-/* Splash details glassmorphism card */
-.splash-card {
+/* ==========================================================================
+   1. HOME VIEW (SPLASH SCREEN / LANDING PAGE)
+   ========================================================================== */
+.home-view .view-overlay {
+    background: var(--splash-gradient);
+    backdrop-filter: blur(2px);
+}
+
+.home-content {
     position: relative;
     z-index: 2;
-    background: rgba(var(--bg-primary) == #080b11 ? 8 : 248, var(--bg-primary) == #080b11 ? 11 : 250, var(--bg-primary) == #080b11 ? 17 : 252, 0.4);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 60px 48px;
-    max-width: 680px;
-    width: 90%;
+    margin: auto;
+    max-width: 750px;
+    width: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 30px 60px var(--shadow-color);
+    padding: 60px 24px;
     animation: zoomInReveal 0.6s cubic-bezier(0.1, 1, 0.1, 1);
 }
 
@@ -191,7 +206,7 @@ button {
     to { opacity: 1; transform: scale(1); }
 }
 
-.splash-welcome {
+.home-badge {
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -200,9 +215,9 @@ button {
     margin-bottom: 20px;
 }
 
-.splash-name {
+.home-name {
     font-family: var(--font-heading);
-    font-size: 3.25rem;
+    font-size: 3.5rem;
     font-weight: 800;
     color: var(--text-header);
     line-height: 1.1;
@@ -214,68 +229,59 @@ button {
     letter-spacing: -0.02em;
 }
 
-.splash-title {
-    font-size: 1.35rem;
+.home-title {
+    font-size: 1.5rem;
     font-weight: 500;
     color: var(--text-primary);
-    margin-bottom: 20px;
-    min-height: 36px;
+    margin-bottom: 24px;
+    min-height: 38px;
 }
 
-.splash-desc {
-    font-size: 1.05rem;
+.home-desc {
+    font-size: 1.1rem;
     color: var(--text-secondary);
     margin-bottom: 40px;
     line-height: 1.6;
 }
 
-/* Exit transition state */
-.splash-screen.hide {
-    transform: translateY(-100vh);
-    opacity: 0;
-    pointer-events: none;
+.home-actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Typewriter animation cursor */
+.cursor {
+    display: inline-block;
+    background-color: var(--accent-color);
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    50% { background-color: transparent; }
 }
 
 /* ==========================================================================
-   2. MAIN PORTFOLIO NAV HEADER & WRAPPERS
+   2. HEADER NAVIGATION (RESUME & CONTACT SITES)
    ========================================================================== */
-.portfolio-content.hidden {
-    opacity: 0;
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
-}
-
-.portfolio-content {
-    opacity: 1;
-    pointer-events: all;
-    height: auto;
-    overflow: visible;
-    transition: opacity var(--transition-normal);
-}
-
 .header {
     position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     height: var(--header-height);
-    background: rgba(var(--bg-primary) == #080b11 ? 8 : 248, var(--bg-primary) == #080b11 ? 11 : 250, var(--bg-primary) == #080b11 ? 17 : 252, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(var(--bg-primary) == #070a13 ? 7 : 248, var(--bg-primary) == #070a13 ? 10 : 250, var(--bg-primary) == #070a13 ? 19 : 252, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     transition: all var(--transition-normal);
 }
 
-.header-container {
-    max-width: var(--max-width);
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.header.scrolled {
+    height: 70px;
+    box-shadow: 0 10px 30px var(--shadow-color);
 }
 
 .logo {
@@ -292,6 +298,7 @@ button {
 .nav-list {
     display: flex;
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .nav-link {
@@ -300,6 +307,7 @@ button {
     color: var(--text-secondary);
     padding: 8px 0;
     position: relative;
+    display: inline-block;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -321,18 +329,12 @@ button {
     width: 100%;
 }
 
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Theme Toggle Button */
+/* Theme toggle status */
 .theme-toggle-btn {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
@@ -355,7 +357,7 @@ button {
     height: 16px;
 }
 
-/* Mobile Toggle Hamburger */
+/* Mobile dropdown menu */
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -373,16 +375,19 @@ button {
 }
 
 /* ==========================================================================
-   3. RESUME SECTIONS FLOW & DECORATIONS
+   3. RESUME PAGE CONTENT FLOW
    ========================================================================== */
-.main-container {
+.page-content {
     display: flex;
     flex-direction: column;
-    gap: 90px;
+    gap: 80px;
     padding-top: 60px;
+    padding-bottom: 80px;
+    position: relative;
+    z-index: 2;
 }
 
-.portfolio-section {
+.resume-section {
     width: 100%;
 }
 
@@ -391,6 +396,10 @@ button {
     align-items: center;
     gap: 12px;
     margin-bottom: 36px;
+}
+
+.section-title-wrapper.justify-center {
+    justify-content: center;
 }
 
 .section-emoji {
@@ -404,7 +413,6 @@ button {
     font-weight: 800;
     color: var(--text-header);
     position: relative;
-    letter-spacing: -0.01em;
 }
 
 .section-heading::after {
@@ -418,7 +426,12 @@ button {
     border-radius: 2px;
 }
 
-/* Card glassmorphism outlines */
+.section-title-wrapper.justify-center .section-heading::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Glassmorphic card styling */
 .border-glow {
     background: var(--bg-card);
     backdrop-filter: blur(16px);
@@ -434,9 +447,7 @@ button {
     transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   SECTION 1: CONTACT INFO
-   ========================================================================== */
+/* Contact cards inside views */
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -444,7 +455,7 @@ button {
 }
 
 .contact-card {
-    padding: 28px 24px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -453,7 +464,7 @@ button {
 
 .contact-card:hover {
     border-color: var(--accent-color);
-    box-shadow: 0 10px 25px rgba(var(--accent-color-rgb), 0.12);
+    box-shadow: 0 10px 25px rgba(var(--accent-color-rgb), 0.15);
 }
 
 .card-icon-wrapper {
@@ -465,7 +476,7 @@ button {
 .contact-title {
     font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.10em;
     font-weight: 700;
     color: var(--text-secondary);
     margin-bottom: 4px;
@@ -478,9 +489,7 @@ button {
     word-break: break-all;
 }
 
-/* ==========================================================================
-   SECTION 2: SUMMARY
-   ========================================================================== */
+/* Summary Card */
 .summary-box {
     padding: 40px;
     position: relative;
@@ -494,7 +503,7 @@ button {
     font-size: 8rem;
     font-family: var(--font-heading);
     color: var(--border-color);
-    opacity: 0.3;
+    opacity: 0.25;
     line-height: 1;
     pointer-events: none;
 }
@@ -507,9 +516,7 @@ button {
     z-index: 2;
 }
 
-/* ==========================================================================
-   SECTION 3: SKILLS
-   ========================================================================== */
+/* Skills */
 .skills-grid {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
@@ -518,8 +525,6 @@ button {
 
 .skills-card {
     padding: 32px;
-    display: flex;
-    flex-direction: column;
 }
 
 .skills-subtitle {
@@ -561,7 +566,7 @@ button {
     height: 100%;
     background-color: var(--accent-color);
     border-radius: 3px;
-    width: 0; /* Animated dynamically */
+    width: 0;
     transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1);
 }
 
@@ -598,9 +603,7 @@ button {
     font-size: 1.2rem;
 }
 
-/* ==========================================================================
-   SECTION 4: EDUCATION TIMELINE
-   ========================================================================== */
+/* Education */
 .education-timeline {
     display: flex;
     flex-direction: column;
@@ -641,9 +644,7 @@ button {
     font-family: var(--font-mono);
 }
 
-/* ==========================================================================
-   SECTION 5: PROJECTS
-   ========================================================================== */
+/* Projects */
 .projects-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -693,9 +694,7 @@ button {
     align-self: flex-start;
 }
 
-/* ==========================================================================
-   SECTION 6: ADDITIONAL COURSES
-   ========================================================================== */
+/* Courses */
 .course-box {
     padding: 32px;
 }
@@ -734,9 +733,7 @@ button {
     line-height: 1.6;
 }
 
-/* ==========================================================================
-   SECTION 7: PAPER PUBLICATIONS
-   ========================================================================== */
+/* Publications */
 .papers-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -765,9 +762,7 @@ button {
     line-height: 1.5;
 }
 
-/* ==========================================================================
-   SECTION 8: INTERNSHIPS
-   ========================================================================== */
+/* Internships */
 .intern-timeline {
     display: flex;
     flex-direction: column;
@@ -804,9 +799,7 @@ button {
     line-height: 1.6;
 }
 
-/* ==========================================================================
-   SECTION 9: CLUB MEMBERSHIPS
-   ========================================================================== */
+/* Memberships */
 .members-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -836,6 +829,99 @@ button {
 }
 
 /* ==========================================================================
+   4. VIEW 3: CONTACT VIEW LAYOUT & INTERACTIONS
+   ========================================================================== */
+.contact-page-layout {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px;
+    width: 100%;
+}
+
+.contact-grid-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-form-panel {
+    padding: 40px;
+}
+
+.form-title {
+    font-size: 1.3rem;
+    color: var(--text-header);
+    margin-bottom: 28px;
+    font-family: var(--font-heading);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-color);
+    padding: 10px 0;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-header);
+    outline: none;
+    transition: border-color var(--transition-normal);
+}
+
+.form-input:focus {
+    border-color: var(--accent-color);
+}
+
+.form-label {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    pointer-events: none;
+    transition: all var(--transition-normal);
+}
+
+/* Float label triggers */
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
+    top: -16px;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+textarea.form-input {
+    resize: none;
+}
+
+/* Emojis Shake keyframes for contact page */
+.shaking-element {
+    display: inline-block;
+    animation: tiltShake 3s infinite ease-in-out;
+}
+
+@keyframes tiltShake {
+    0%, 100% { transform: rotate(0deg); }
+    15% { transform: rotate(-15deg) scale(1.15); }
+    30% { transform: rotate(12deg) scale(1.15); }
+    45% { transform: rotate(-10deg) scale(1.1); }
+    60% { transform: rotate(8deg) scale(1.1); }
+    75% { transform: rotate(0deg) scale(1); }
+}
+
+/* ==========================================================================
    BUTTONS
    ========================================================================== */
 .btn {
@@ -855,13 +941,24 @@ button {
     color: #fff;
 }
 
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-header);
+    border: 1px solid var(--border-color-active);
+}
+
 .btn-glowing {
-    box-shadow: 0 0 20px rgba(var(--accent-color-rgb), 0.3);
+    box-shadow: 0 0 20px rgba(var(--accent-color-rgb), 0.25);
 }
 
 .btn-glowing:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(var(--accent-color-rgb), 0.6);
+    box-shadow: 0 0 35px rgba(var(--accent-color-rgb), 0.55);
+}
+
+.btn-secondary.btn-glowing:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: var(--accent-color);
 }
 
 .btn-text {
@@ -889,6 +986,10 @@ button {
     width: 100%;
 }
 
+.btn-block {
+    width: 100%;
+}
+
 /* ==========================================================================
    FOOTER
    ========================================================================== */
@@ -907,11 +1008,6 @@ button {
     gap: 20px;
 }
 
-.copyright {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-}
-
 .footer-links {
     display: flex;
     gap: 20px;
@@ -928,7 +1024,7 @@ button {
 }
 
 /* ==========================================================================
-   BACK TO TOP & MODAL DETAIL DRAWER
+   BACK TO TOP & DETAILED MODAL DRAWER
    ========================================================================== */
 .back-to-top {
     position: fixed;
@@ -960,7 +1056,7 @@ button {
     transform: translateY(-4px);
 }
 
-/* Details Overlay Modal Gutter */
+/* Specifications Drawer Modal Gutter */
 .modal {
     position: fixed;
     top: 0;
@@ -1021,7 +1117,6 @@ button {
     color: var(--text-header);
 }
 
-/* Modal details structures */
 .modal-project-title {
     font-size: 1.5rem;
     color: var(--text-header);
@@ -1077,7 +1172,7 @@ button {
     color: var(--text-header);
 }
 
-/* Toast Container Banners */
+/* Toast Container Alerts */
 .toast-container {
     position: fixed;
     bottom: 40px;
@@ -1113,23 +1208,24 @@ button {
 }
 
 /* ==========================================================================
-   RESPONSIVE LAYOUT BREAKPOINTS
+   RESPONSIVE DESIGN BREAKPOINTS
    ========================================================================== */
 @media (max-width: 900px) {
-    .splash-card {
+    .home-content {
         padding: 40px 24px;
     }
     
-    .splash-name {
+    .home-name {
         font-size: 2.5rem;
     }
     
-    .splash-title {
+    .home-title {
         font-size: 1.25rem;
     }
     
-    .skills-grid, .projects-grid, .papers-grid, .members-grid {
+    .skills-grid, .projects-grid, .papers-grid, .members-grid, .contact-page-layout {
         grid-template-columns: 1fr;
+        gap: 24px;
     }
 }
 

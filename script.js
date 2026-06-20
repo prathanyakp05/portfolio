@@ -1,55 +1,80 @@
 /* ==========================================================================
-   PORTFOLIO SCRIPT CONTROLLER (SPLASH SCREEN & INTERACTIVE ELEMENTS)
+   PORTFOLIO SCRIPT CONTROLLER (SPA ROUTING & VIEWS CONTROLLER)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initSplashTransition();
+    initSPARouting();
     initTheme();
     initTypewriter();
     initMobileMenu();
     initScrollSpyAndHeader();
     initIntersectionObservers();
     initProjectsModal();
+    initContactForm();
     initBackToTop();
 });
 
 /* ==========================================================================
-   1. SPLASH SCREEN TO MAIN CONTENT TRANSITION
+   1. SINGLE PAGE APPLICATION (SPA) ROUTING SYSTEM
    ========================================================================== */
-function initSplashTransition() {
-    const btnEnter = document.getElementById('btn-enter');
-    const splashScreen = document.getElementById('splash-screen');
-    const portfolioContent = document.getElementById('portfolio-content');
+function initSPARouting() {
+    const pageHome = document.getElementById('page-home');
+    const pageResume = document.getElementById('page-resume');
+    const pageContact = document.getElementById('page-contact');
+    
+    const btnViewWork = document.getElementById('btn-view-work');
+    const btnContactMe = document.getElementById('btn-contact-me');
+    const routeButtons = document.querySelectorAll('.nav-route');
 
-    if (btnEnter && splashScreen && portfolioContent) {
-        btnEnter.addEventListener('click', () => {
-            // Slide up the landing page
-            splashScreen.classList.add('hide');
-            
-            // Unhide the main resume content
-            portfolioContent.classList.remove('hidden');
-            
-            // Pop welcome toast
-            setTimeout(() => {
-                showToast('🔑 Portfolio unlocked! Welcome.');
-            }, 600);
+    const views = {
+        'home': pageHome,
+        'resume': pageResume,
+        'contact': pageContact
+    };
 
-            // Scroll to top of portfolio content smoothly
-            setTimeout(() => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }, 100);
+    function navigateTo(targetView) {
+        if (!views[targetView]) return;
+
+        // Hide all views
+        Object.keys(views).forEach(key => {
+            views[key].classList.add('hidden');
         });
+
+        // Show active view
+        views[targetView].classList.remove('hidden');
+
+        // Scroll page to top instantly on navigate
+        window.scrollTo({
+            top: 0,
+            behavior: 'instant'
+        });
+
+        showToast(`📂 Switched to ${targetView.toUpperCase()} page`);
     }
+
+    // Connect splash buttons
+    if (btnViewWork) {
+        btnViewWork.addEventListener('click', () => navigateTo('resume'));
+    }
+    if (btnContactMe) {
+        btnContactMe.addEventListener('click', () => navigateTo('contact'));
+    }
+
+    // Connect nav header links & footer routes
+    routeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = btn.getAttribute('data-target');
+            navigateTo(target);
+        });
+    });
 }
 
 /* ==========================================================================
    2. THEME SWITCHER (DARK / LIGHT MODES)
    ========================================================================== */
 function initTheme() {
-    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeActions = document.querySelectorAll('.theme-toggle-action');
     const body = document.body;
 
     const savedTheme = localStorage.getItem('theme');
@@ -59,21 +84,23 @@ function initTheme() {
         body.className = 'dark-theme';
     }
 
-    themeToggleBtn.addEventListener('click', () => {
-        if (body.classList.contains('dark-theme')) {
-            body.classList.replace('dark-theme', 'light-theme');
-            localStorage.setItem('theme', 'light-theme');
-            showToast('☀️ Switched to Light Mode');
-        } else {
-            body.classList.replace('light-theme', 'dark-theme');
-            localStorage.setItem('theme', 'dark-theme');
-            showToast('🌙 Switched to Dark Mode');
-        }
+    themeActions.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (body.classList.contains('dark-theme')) {
+                body.className = 'light-theme';
+                localStorage.setItem('theme', 'light-theme');
+                showToast('☀️ Switched to Light Mode');
+            } else {
+                body.className = 'dark-theme';
+                localStorage.setItem('theme', 'dark-theme');
+                showToast('🌙 Switched to Dark Mode');
+            }
+        });
     });
 }
 
 /* ==========================================================================
-   3. TYPEWRITER EFFECT (LANDING PAGE)
+   3. TYPEWRITER EFFECT (HOME PAGE)
    ========================================================================== */
 function initTypewriter() {
     const textElement = document.getElementById('typewriter-text');
@@ -109,7 +136,7 @@ function initTypewriter() {
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            typingSpeed = 500; // Pause before typing next
+            typingSpeed = 500; // Pause before typing
         }
 
         setTimeout(type, typingSpeed);
@@ -119,47 +146,58 @@ function initTypewriter() {
 }
 
 /* ==========================================================================
-   4. MOBILE NAVBAR TOGGLE
+   4. MOBILE NAVBAR TOGGLES (FOR MULTIPLE NAV HEADERS)
    ========================================================================== */
 function initMobileMenu() {
-    const toggleBtn = document.getElementById('mobile-menu-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileToggles = document.querySelectorAll('.mobile-menu-action');
 
-    if (toggleBtn && navMenu) {
+    mobileToggles.forEach(toggleBtn => {
         toggleBtn.addEventListener('click', () => {
-            toggleBtn.classList.toggle('active');
-            navMenu.classList.toggle('active');
+            const targetId = toggleBtn.getAttribute('data-target');
+            const navMenu = document.getElementById(targetId);
+            
+            if (navMenu) {
+                toggleBtn.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            }
         });
+    });
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                toggleBtn.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
+    // Close mobile nav when clicking nav links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const parentMenu = link.closest('.nav-menu');
+            if (parentMenu && parentMenu.classList.contains('active')) {
+                parentMenu.classList.remove('active');
+                const targetBtn = document.querySelector(`[data-target="${parentMenu.id}"]`);
+                if (targetBtn) targetBtn.classList.remove('active');
+            }
         });
-    }
+    });
 }
 
 /* ==========================================================================
-   5. SCROLL SPY AND ACTIVE HEADER NAV
+   5. HEADER SCROLL & RESUME INTERN NAV SPY
    ========================================================================== */
 function initScrollSpyAndHeader() {
-    const header = document.querySelector('.header');
-    const sections = document.querySelectorAll('.portfolio-section');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const headers = document.querySelectorAll('.header');
+    const sections = document.querySelectorAll('.resume-section');
+    const navLinks = document.querySelectorAll('#nav-menu-resume .nav-link');
 
     window.addEventListener('scroll', () => {
         const scrollPos = window.scrollY;
 
         // Sticky header class toggle
-        if (scrollPos > 40) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        headers.forEach(header => {
+            if (scrollPos > 40) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
 
-        // Active link scroll spy
+        // Active link scroll spy (Resume page sections only)
         sections.forEach(sec => {
             const top = sec.offsetTop - 120;
             const height = sec.offsetHeight;
@@ -178,7 +216,7 @@ function initScrollSpyAndHeader() {
 }
 
 /* ==========================================================================
-   6. INTERSECTION OBSERVERS (SKILLS PROGRESS FILL ANIMATION)
+   6. SKILLS PROGRESS FILL ON SCROLL
    ========================================================================== */
 function initIntersectionObservers() {
     const skillsSection = document.getElementById('sec-skills');
@@ -300,7 +338,36 @@ function initProjectsModal() {
 }
 
 /* ==========================================================================
-   8. BACK TO TOP CONTROLS
+   8. CONTACT FORM SUBMISSION
+   ========================================================================== */
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const origText = submitBtn.innerHTML;
+
+        submitBtn.innerHTML = 'Sending...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            showToast('✉️ Message Sent Successfully!');
+            form.reset();
+
+            // Force blur elements
+            const inputs = form.querySelectorAll('.form-input');
+            inputs.forEach(input => input.blur());
+
+            submitBtn.innerHTML = origText;
+            submitBtn.disabled = false;
+        }, 1200);
+    });
+}
+
+/* ==========================================================================
+   9. BACK TO TOP CONTROLS
    ========================================================================== */
 function initBackToTop() {
     const btn = document.getElementById('back-to-top');
@@ -323,7 +390,7 @@ function initBackToTop() {
 }
 
 /* ==========================================================================
-   9. TOAST NOTIFICATION GENERATOR
+   10. TOAST NOTIFICATIONS
    ========================================================================== */
 const toastContainer = document.getElementById('toast-container');
 
