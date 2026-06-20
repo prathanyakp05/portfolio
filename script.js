@@ -1,19 +1,52 @@
 /* ==========================================================================
-   IDE PORTFOLIO SCRIPT CONTROLLER
+   PORTFOLIO SCRIPT CONTROLLER (SPLASH SCREEN & INTERACTIVE ELEMENTS)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    initSplashTransition();
     initTheme();
     initTypewriter();
-    initSmoothScroll();
+    initMobileMenu();
+    initScrollSpyAndHeader();
     initIntersectionObservers();
     initProjectsModal();
-    initTerminal();
     initBackToTop();
 });
 
 /* ==========================================================================
-   THEME SWITCHER (DARK / LIGHT IDE THEMES)
+   1. SPLASH SCREEN TO MAIN CONTENT TRANSITION
+   ========================================================================== */
+function initSplashTransition() {
+    const btnEnter = document.getElementById('btn-enter');
+    const splashScreen = document.getElementById('splash-screen');
+    const portfolioContent = document.getElementById('portfolio-content');
+
+    if (btnEnter && splashScreen && portfolioContent) {
+        btnEnter.addEventListener('click', () => {
+            // Slide up the landing page
+            splashScreen.classList.add('hide');
+            
+            // Unhide the main resume content
+            portfolioContent.classList.remove('hidden');
+            
+            // Pop welcome toast
+            setTimeout(() => {
+                showToast('🔑 Portfolio unlocked! Welcome.');
+            }, 600);
+
+            // Scroll to top of portfolio content smoothly
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        });
+    }
+}
+
+/* ==========================================================================
+   2. THEME SWITCHER (DARK / LIGHT MODES)
    ========================================================================== */
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
@@ -30,17 +63,17 @@ function initTheme() {
         if (body.classList.contains('dark-theme')) {
             body.classList.replace('dark-theme', 'light-theme');
             localStorage.setItem('theme', 'light-theme');
-            showToast('☀️ Switched to GitHub Light Theme');
+            showToast('☀️ Switched to Light Mode');
         } else {
             body.classList.replace('light-theme', 'dark-theme');
             localStorage.setItem('theme', 'dark-theme');
-            showToast('🌙 Switched to One Dark Pro Theme');
+            showToast('🌙 Switched to Dark Mode');
         }
     });
 }
 
 /* ==========================================================================
-   HERO TYPING ANIMATION
+   3. TYPEWRITER EFFECT (LANDING PAGE)
    ========================================================================== */
 function initTypewriter() {
     const textElement = document.getElementById('typewriter-text');
@@ -72,11 +105,11 @@ function initTypewriter() {
 
         if (!isDeleting && charIndex === currentPhrase.length) {
             isDeleting = true;
-            typingSpeed = 1500; // Pause at end
+            typingSpeed = 1500; // Pause at end of word
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            typingSpeed = 500; // Pause before next
+            typingSpeed = 500; // Pause before typing next
         }
 
         setTimeout(type, typingSpeed);
@@ -86,25 +119,66 @@ function initTypewriter() {
 }
 
 /* ==========================================================================
-   SMOOTH SCROLL FOR HERO ACTION
+   4. MOBILE NAVBAR TOGGLE
    ========================================================================== */
-function initSmoothScroll() {
-    const btnViewWork = document.getElementById('btn-view-work');
-    const secProjects = document.getElementById('sec-projects');
+function initMobileMenu() {
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-    if (btnViewWork && secProjects) {
-        btnViewWork.addEventListener('click', () => {
-            secProjects.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+    if (toggleBtn && navMenu) {
+        toggleBtn.addEventListener('click', () => {
+            toggleBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                toggleBtn.classList.remove('active');
+                navMenu.classList.remove('active');
             });
-            showToast('📂 Scrolled to projects');
         });
     }
 }
 
 /* ==========================================================================
-   SCROLL INTERSECTIONS (SKILLS PROGRESS SWEEPS)
+   5. SCROLL SPY AND ACTIVE HEADER NAV
+   ========================================================================== */
+function initScrollSpyAndHeader() {
+    const header = document.querySelector('.header');
+    const sections = document.querySelectorAll('.portfolio-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY;
+
+        // Sticky header class toggle
+        if (scrollPos > 40) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // Active link scroll spy
+        sections.forEach(sec => {
+            const top = sec.offsetTop - 120;
+            const height = sec.offsetHeight;
+            const id = sec.getAttribute('id');
+
+            if (scrollPos >= top && scrollPos < top + height) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+}
+
+/* ==========================================================================
+   6. INTERSECTION OBSERVERS (SKILLS PROGRESS FILL ANIMATION)
    ========================================================================== */
 function initIntersectionObservers() {
     const skillsSection = document.getElementById('sec-skills');
@@ -114,17 +188,17 @@ function initIntersectionObservers() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 progressFills.forEach(fill => {
-                    const width = fill.parentElement.previousElementSibling.children[1].textContent;
+                    const widthText = fill.parentElement.previousElementSibling.children[1].textContent;
                     fill.style.width = '0';
                     setTimeout(() => {
-                        fill.style.width = width;
-                    }, 100);
+                        fill.style.width = widthText;
+                    }, 50);
                 });
                 skillsObserver.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.15
+        threshold: 0.2
     });
 
     if (skillsSection) {
@@ -133,7 +207,7 @@ function initIntersectionObservers() {
 }
 
 /* ==========================================================================
-   PROJECT DETAILS OVERLAY DRAWER
+   7. PROJECT DESCRIPTION MODAL OVERLAYS
    ========================================================================== */
 function initProjectsModal() {
     const modal = document.getElementById('project-modal');
@@ -142,16 +216,18 @@ function initProjectsModal() {
     const closeBtn = document.querySelector('.modal-close');
     const backdrop = document.querySelector('.modal-backdrop');
 
+    if (!modal || !modalContent || !closeBtn || !backdrop) return;
+
     const projectData = {
         'waste-detection': {
             title: 'Real-Time Waste Detection & Alert System',
             subtitle: 'Java / OpenCV / IoT Webhooks',
             desc: 'Developed a robust automated detection network that isolates floating and submerged trash items in river channels and coastal borders. Analyzes real-time image packets, triggering direct alarms to regional clean-up teams for prompt debris recovery.',
             features: [
-                'Computer Vision Integration: Custom color filters for detecting submerged plastics.',
-                'Instant Webhooks: Automated alerts sent to environmental containment squads.',
-                'Data Logging: Track trash accumulation stats over time.',
-                'Highly responsive notification grid for local authorities.'
+                'Computer Vision integration utilizing custom color filtering models.',
+                'Submerged Analytics identifying density shapes underwater.',
+                'Alert systems dispatching SMS/Email alerts via webhook configurations.',
+                'Interactive database detailing local coordinates and metrics logs.'
             ],
             tech: ['Java', 'OpenCV', 'IoT Webhooks', 'Spring Boot', 'MySQL']
         },
@@ -160,10 +236,10 @@ function initProjectsModal() {
             subtitle: 'Python / GenAI / Spring Boot',
             desc: 'An AI-driven parsing portal designed to import invoice files (PDF/images), run optical character recognition (OCR), and parse critical entities (vendor details, taxation figures, items) using fine-tuned Prompt Engineering and Generative AI, dumping structured tables directly into databases.',
             features: [
-                'Adaptive Form Parsing: Extracts fields accurately without needing fixed layout coordinates.',
-                'Zero-shot Entity Extraction: Flexibly pulls key-value pairs from complex vendor tables.',
-                'Spring Boot Middleware: Runs asynchronous parsing tasks securely.',
-                'Export Utilities: Download organized data as CSV or JSON arrays.'
+                'Form Layout Independence: Automatically extracts data parameters without template constraints.',
+                'Zero-shot Parser: Flexibly adapts to diverse vendor billing templates.',
+                'Spring Boot API: Processes files asynchronously and securely.',
+                'Export Utilities: Enables one-click exports to CSV and JSON formats.'
             ],
             tech: ['Python', 'Generative AI', 'Spring Boot', 'OCR APIs', 'MySQL']
         }
@@ -188,7 +264,7 @@ function initProjectsModal() {
             <span class="modal-project-subtitle">${data.subtitle}</span>
             <p class="modal-project-desc">${data.desc}</p>
             
-            <h4 class="modal-project-subheading">Specifications</h4>
+            <h4 class="modal-project-subheading">Key Specifications</h4>
             <ul class="modal-project-list">
                 ${featuresHtml}
             </ul>
@@ -224,66 +300,7 @@ function initProjectsModal() {
 }
 
 /* ==========================================================================
-   INTERACTIVE SHELL / TERMINAL SIMULATOR
-   ========================================================================== */
-function initTerminal() {
-    const input = document.getElementById('terminal-input');
-    const history = document.getElementById('terminal-history');
-    const body = document.getElementById('terminal-body');
-
-    if (!input || !history || !body) return;
-
-    const commands = {
-        'help': 'Available commands: <span class="keyword">about</span>, <span class="keyword">skills</span>, <span class="keyword">projects</span>, <span class="keyword">contact</span>, <span class="keyword">clear</span>',
-        'about': 'Prathanya P. | Aspiring Software Engineer | B.Sc. Computer Systems & Design | CGPA: 7.4. Passionate about backend development, software QA, and leveraging GenAI pipelines.',
-        'skills': 'Technical skills: <span class="string">Java, Spring Boot, MySQL, HTML, CSS, JavaScript</span>. Soft skills: <span class="string">Strategic Planning, Teamwork, Leadership</span>.',
-        'projects': 'Featured Projects:<br>1. <span class="keyword">waste-detection</span>: Real-time alert system for water debris.<br>2. <span class="keyword">invoice-extraction</span>: Intelligent parser using Generative AI.',
-        'contact': 'Reach me at:<br>- Phone: <span class="string">9894390455</span><br>- Email: <span class="string">Prathanyakp@gmail.com</span><br>- GitHub: <span class="string">github.com/prathanyakp05</span><br>- LinkedIn: <span class="string">linkedin.com/in/prathanya-k-p-a673b9373/</span>'
-    };
-
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const rawVal = input.value.trim();
-            const cmd = rawVal.toLowerCase();
-            input.value = '';
-
-            if (cmd === '') return;
-
-            // Output command prompt line
-            const promptLine = document.createElement('div');
-            promptLine.className = 'term-line';
-            promptLine.innerHTML = `<span class="prompt">guest@prathanya:~$</span> ${rawVal}`;
-            history.appendChild(promptLine);
-
-            // Execute commands
-            const outputLine = document.createElement('div');
-            outputLine.className = 'term-line';
-
-            if (cmd === 'clear') {
-                history.innerHTML = '';
-                return;
-            } else if (commands[cmd]) {
-                outputLine.innerHTML = commands[cmd];
-            } else {
-                outputLine.className = 'term-line error';
-                outputLine.innerHTML = `command not found: "${rawVal}". Type "help" for options.`;
-            }
-
-            history.appendChild(outputLine);
-            
-            // Auto scroll to bottom
-            body.scrollTop = body.scrollHeight;
-        }
-    });
-
-    // Keep focus on input if terminal is clicked
-    body.addEventListener('click', () => {
-        input.focus();
-    });
-}
-
-/* ==========================================================================
-   BACK TO TOP CONTROLS
+   8. BACK TO TOP CONTROLS
    ========================================================================== */
 function initBackToTop() {
     const btn = document.getElementById('back-to-top');
@@ -306,7 +323,7 @@ function initBackToTop() {
 }
 
 /* ==========================================================================
-   TOAST NOTIFICATION ENGINE
+   9. TOAST NOTIFICATION GENERATOR
    ========================================================================== */
 const toastContainer = document.getElementById('toast-container');
 

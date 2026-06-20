@@ -3,501 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prathanya Panneerselvam | IDE Portfolio</title>
-    <meta name="description" content="IDE-themed interactive developer portfolio of Prathanya Panneerselvam - Aspiring Software Engineer specializing in Generative AI, Java, and Spring Boot.">
-    <meta name="keywords" content="Prathanya Panneerselvam, Software Engineer, Portfolio, IDE Theme, Java, Spring Boot, Generative AI">
+    <title>Prathanya Panneerselvam | Portfolio</title>
+    <meta name="description" content="Premium personal portfolio of Prathanya Panneerselvam - Aspiring Software Engineer specializing in Generative AI, Java, and Spring Boot.">
+    <meta name="keywords" content="Prathanya Panneerselvam, Software Engineer, Portfolio, HTML, CSS, JS, Spring Boot, Java, GenAI">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-    <!-- IDE Container -->
-    <div class="ide-window">
-        <!-- Title Bar -->
-        <div class="ide-titlebar">
-            <div class="window-controls-left">
-                <span class="ctrl-dot close"></span>
-                <span class="ctrl-dot minimize"></span>
-                <span class="ctrl-dot expand"></span>
-            </div>
-            <div class="window-title">Prathanya_Resume.json - IDE Portfolio</div>
-            <div class="window-controls-right">
-                <!-- Theme Toggle Icon -->
-                <button id="theme-toggle" class="titlebar-btn" aria-label="Toggle Theme">
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-            </div>
+
+    <!-- 1. SPLASH SCREEN (LANDING GATEKEEPER) -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-overlay"></div>
+        <div class="splash-card">
+            <span class="splash-welcome">👋 Welcome to my digital space</span>
+            <h1 class="splash-name">Prathanya Panneerselvam</h1>
+            <h2 class="splash-title">
+                I am an <span class="typewriter" id="typewriter-text"></span><span class="cursor">&nbsp;</span>
+            </h2>
+            <p class="splash-desc">
+                Aspiring Software Engineer focused on backend development, software quality assurance, and Generative AI prompt pipelines.
+            </p>
+            <button id="btn-enter" class="btn btn-primary btn-glowing">
+                <span>View My Work</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
         </div>
+    </div>
 
-        <div class="ide-body">
-            <!-- Sidebar (Activity Bar & File Tree) -->
-            <aside class="ide-sidebar">
-                <!-- Activity Bar Icons -->
-                <div class="activity-bar">
-                    <div class="activity-icon active" title="Explorer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-                    </div>
-                    <div class="activity-icon" title="Search">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    </div>
-                    <div class="activity-icon" title="Source Control">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
-                    </div>
+    <!-- 2. MAIN PORTFOLIO BODY (Initially hidden, revealed on click) -->
+    <div id="portfolio-content" class="portfolio-content hidden">
+        
+        <!-- Navigation Header -->
+        <header class="header">
+            <div class="header-container">
+                <a href="#portfolio-content" class="logo">
+                    <span class="logo-accent">&lt;</span>Prathanya<span class="logo-accent">/&gt;</span>
+                </a>
+                
+                <nav class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li><a href="#sec-contact" class="nav-link">Contact</a></li>
+                        <li><a href="#sec-summary" class="nav-link">Summary</a></li>
+                        <li><a href="#sec-skills" class="nav-link">Skills</a></li>
+                        <li><a href="#sec-education" class="nav-link">Education</a></li>
+                        <li><a href="#sec-projects" class="nav-link">Projects</a></li>
+                        <li><a href="#sec-courses" class="nav-link">Courses</a></li>
+                        <li><a href="#sec-publications" class="nav-link">Papers</a></li>
+                        <li><a href="#sec-internships" class="nav-link">Internships</a></li>
+                        <li><a href="#sec-memberships" class="nav-link">Memberships</a></li>
+                    </ul>
+                </nav>
+
+                <div class="nav-actions">
+                    <!-- Light/Dark Mode Switcher -->
+                    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <!-- Mobile Hamburger -->
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
                 </div>
+            </div>
+        </header>
 
-                <!-- File Explorer Panel -->
-                <div class="explorer-panel">
-                    <div class="panel-header">EXPLORER</div>
-                    <div class="folder-section">
-                        <div class="folder-title">
-                            <span class="arrow-icon">▼</span>
-                            <span class="folder-icon">📁</span>
-                            <strong>portfolio-prathanya</strong>
-                        </div>
-                        <ul class="file-list">
-                            <li class="file-item active" data-file="resume">
-                                <span class="file-icon json-icon">{ }</span>
-                                <span>Prathanya_Resume.json</span>
-                            </li>
-                            <li class="file-item" data-file="waste-details">
-                                <span class="file-icon html-icon">&lt;&gt;</span>
-                                <span>waste_alert_system.html</span>
-                            </li>
-                            <li class="file-item" data-file="invoice-details">
-                                <span class="file-icon html-icon">&lt;&gt;</span>
-                                <span>invoice_extractor.html</span>
-                            </li>
-                        </ul>
-                    </div>
+        <!-- Main Content Area -->
+        <main class="container main-container">
+            
+            <!-- SECTION 1: CONTACT INFO -->
+            <section id="sec-contact" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">📞</span>
+                    <h2 class="section-heading">Contact Details</h2>
                 </div>
-            </aside>
-
-            <!-- Editor Container -->
-            <section class="ide-editor">
-                <!-- Editor Tab Bar -->
-                <div class="editor-tabs">
-                    <div class="tab-item active" id="tab-resume">
-                        <span class="file-icon json-icon">{ }</span>
-                        <span>Prathanya_Resume.json</span>
-                        <span class="tab-close">×</span>
-                    </div>
-                </div>
-
-                <!-- Main Editor Area with Line Numbers -->
-                <div class="editor-workspace" id="editor-workspace">
-                    
-                    <!-- Line 1: Header / Hello -->
-                    <div class="editor-line header-line">
-                        <div class="code-block">
-                            <span class="comment">/**</span>
-                            <span class="comment">&nbsp;* Welcome to the Interactive IDE Resume of Prathanya Panneerselvam</span>
-                            <span class="comment">&nbsp;* Click "View My Work" below to jump directly to projects!</span>
-                            <span class="comment">&nbsp;*/</span>
-                        </div>
-                    </div>
-
-                    <!-- Hero Presentation inside Editor -->
-                    <div class="editor-line">
-                        <div class="hero-presentation">
-                            <div class="hero-avatar-wrapper">
-                                <img src="avatar.png" alt="Prathanya Avatar" class="hero-avatar">
-                                <div class="avatar-glow"></div>
-                            </div>
-                            <div class="hero-text-block">
-                                <h1 class="hero-name">Prathanya Panneerselvam</h1>
-                                <p class="hero-tagline">
-                                    I am an <span class="typewriter" id="typewriter-text"></span><span class="cursor">&nbsp;</span>
-                                </p>
-                                <div class="hero-actions">
-                                    <button class="btn btn-primary" id="btn-view-work">View My Work</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Line: Contact Info Section (Exact PDF Start) -->
-                    <div class="editor-line section-header-line" id="sec-contact">
-                        <div class="code-block">
-                            <span class="tag">&lt;contact&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="contact-details-grid">
-                            <div class="contact-card border-glow">
-                                <span class="key">Phone:</span>
-                                <span class="val"><a href="tel:9894390455">9894390455</a></span>
-                            </div>
-                            <div class="contact-card border-glow">
-                                <span class="key">Email:</span>
-                                <span class="val"><a href="mailto:Prathanyakp@gmail.com">Prathanyakp@gmail.com</a></span>
-                            </div>
-                            <div class="contact-card border-glow">
-                                <span class="key">GitHub:</span>
-                                <span class="val"><a href="https://github.com/prathanyakp05" target="_blank" rel="noopener noreferrer">prathanyakp05</a></span>
-                            </div>
-                            <div class="contact-card border-glow">
-                                <span class="key">LinkedIn:</span>
-                                <span class="val"><a href="https://www.linkedin.com/in/prathanya-k-p-a673b9373/" target="_blank" rel="noopener noreferrer">prathanya-k-p</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/contact&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Summary Section -->
-                    <div class="editor-line section-header-line" id="sec-summary">
-                        <div class="code-block">
-                            <span class="tag">&lt;summary&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="summary-box code-style-panel">
-                            <p class="summary-paragraph">
-                                <span class="comment">// Professional Objective</span><br>
-                                Aspiring Software Engineer with a strong foundation in backend development and software quality assurance. Passionate about building user-centric, high-quality software solutions and leveraging **Generative AI** and **Prompt Engineering** to create innovative systems. A quick learner with strong analytical, problem-solving, and collaboration skills.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/summary&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Skills Section -->
-                    <div class="editor-line section-header-line" id="sec-skills">
-                        <div class="code-block">
-                            <span class="tag">&lt;skills&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="skills-wrapper">
-                            <!-- Technical Skills JSON Block -->
-                            <div class="skills-card code-style-panel">
-                                <div class="card-header">
-                                    <span class="file-icon json-icon">{ }</span>
-                                    <span>Technical_Skills.json</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="skill-meter">
-                                        <div class="sm-info"><span>HTML, CSS, JS</span><span>90%</span></div>
-                                        <div class="sm-bar"><div class="sm-fill fill-html"></div></div>
-                                    </div>
-                                    <div class="skill-meter">
-                                        <div class="sm-info"><span>JAVA / JAVASCRIPT</span><span>85%</span></div>
-                                        <div class="sm-bar"><div class="sm-fill fill-java"></div></div>
-                                    </div>
-                                    <div class="skill-meter">
-                                        <div class="sm-info"><span>MYSQL</span><span>80%</span></div>
-                                        <div class="sm-bar"><div class="sm-fill fill-mysql"></div></div>
-                                    </div>
-                                    <div class="skill-meter">
-                                        <div class="sm-info"><span>Spring Boot</span><span>75%</span></div>
-                                        <div class="sm-bar"><div class="sm-fill fill-spring"></div></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Soft Skills JSON Block -->
-                            <div class="skills-card code-style-panel">
-                                <div class="card-header">
-                                    <span class="file-icon json-icon">{ }</span>
-                                    <span>Soft_Skills.json</span>
-                                </div>
-                                <div class="card-body soft-skills-body">
-                                    <div class="soft-chip border-glow">
-                                        <span class="chip-dot"></span>
-                                        <span>Strategic Planning</span>
-                                    </div>
-                                    <div class="soft-chip border-glow">
-                                        <span class="chip-dot"></span>
-                                        <span>Teamwork</span>
-                                    </div>
-                                    <div class="soft-chip border-glow">
-                                        <span class="chip-dot"></span>
-                                        <span>Leadership</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/skills&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Education Section -->
-                    <div class="editor-line section-header-line" id="sec-education">
-                        <div class="code-block">
-                            <span class="tag">&lt;education&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="education-grid">
-                            <!-- College -->
-                            <div class="edu-card code-style-panel border-glow">
-                                <div class="edu-badge">CGPA: 7.4</div>
-                                <h3 class="edu-title">Kongu Engineering College, Perundurai</h3>
-                                <p class="edu-degree">Computer Systems and Design</p>
-                            </div>
-                            <!-- Higher Secondary -->
-                            <div class="edu-card code-style-panel border-glow">
-                                <div class="edu-badge">63%</div>
-                                <h3 class="edu-title">Higher Secondary School</h3>
-                                <p class="edu-school">Green Garden Matric. Hr. Sec. School</p>
-                            </div>
-                            <!-- Secondary -->
-                            <div class="edu-card code-style-panel border-glow">
-                                <div class="edu-badge">2021 - 2022</div>
-                                <h3 class="edu-title">Secondary School</h3>
-                                <p class="edu-school">Green Garden Matric. Hr. Sec. School</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/education&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Projects Section -->
-                    <div class="editor-line section-header-line" id="sec-projects">
-                        <div class="code-block">
-                            <span class="tag">&lt;projects&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="projects-wrapper">
-                            <!-- Project 1 -->
-                            <div class="project-box border-glow">
-                                <div class="p-header">
-                                    <h3>Real-Time Waste Detection & Alert System</h3>
-                                    <span class="p-tech">Java / OpenCV</span>
-                                </div>
-                                <p class="p-text">Designed a real-time detection and alert framework targeting floating & submerged waste in water systems, alerting ecological departments for debris clearance.</p>
-                                <button class="btn btn-text open-modal-btn" data-project="waste-detection">Inspect Specs &rarr;</button>
-                            </div>
-
-                            <!-- Project 2 -->
-                            <div class="project-box border-glow">
-                                <div class="p-header">
-                                    <h3>Intelligent Invoice Extraction System</h3>
-                                    <span class="p-tech">GenAI / Spring Boot</span>
-                                </div>
-                                <p class="p-text">Built an AI-driven invoice parsing system extracting critical transactional details from unstructured documents into clean, searchable database grids.</p>
-                                <button class="btn btn-text open-modal-btn" data-project="invoice-extraction">Inspect Specs &rarr;</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/projects&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Additional Course Section -->
-                    <div class="editor-line section-header-line" id="sec-courses">
-                        <div class="code-block">
-                            <span class="tag">&lt;additional_courses&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="course-box code-style-panel border-glow">
-                            <div class="course-header-row">
-                                <h3>AI Software Engineer Training</h3>
-                                <span class="course-duration">6 Months</span>
-                            </div>
-                            <p class="course-spec">Java + AI Course at **Blue Ball Technology**, Chennai</p>
-                            <p class="course-details">Acquired advanced training building automation triggers, setting up microservice hooks, and using prompt models for code generation blocks.</p>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/additional_courses&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Paper Publications Section -->
-                    <div class="editor-line section-header-line" id="sec-publications">
-                        <div class="code-block">
-                            <span class="tag">&lt;paper_publications&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="papers-grid">
-                            <div class="paper-box code-style-panel border-glow">
-                                <span class="paper-tag">National Institute of Technology (NIT) Uttarakhand</span>
-                                <h3>Methodology Research Paper</h3>
-                                <p>Presented and published a technical paper detailing computer systems architectures and verification models under NIT Uttarakhand conferences.</p>
-                            </div>
-                            <div class="paper-box code-style-panel border-glow">
-                                <span class="paper-tag">KSR College of Engineering, Tamil Nadu</span>
-                                <h3>Applied Systems Research Paper</h3>
-                                <p>Co-authored and published a technical paper showcasing database design optimization and algorithm analysis at KSR College.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/paper_publications&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Internships Section -->
-                    <div class="editor-line section-header-line" id="sec-internships">
-                        <div class="code-block">
-                            <span class="tag">&lt;internships&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="internships-grid">
-                            <!-- Internship 1 -->
-                            <div class="intern-card code-style-panel border-glow">
-                                <div class="intern-header-row">
-                                    <h3>Software Engineer Intern</h3>
-                                    <span class="intern-company">Merida Tech Minds</span>
-                                </div>
-                                <span class="intern-location">Bangalore, India</span>
-                                <p class="intern-desc">Contributed to building web apps, executing quality assurance test suites, database scripting, and debugging API routes.</p>
-                            </div>
-
-                            <!-- Internship 2 -->
-                            <div class="intern-card code-style-panel border-glow">
-                                <div class="intern-header-row">
-                                    <h3>Technical Intern</h3>
-                                    <span class="intern-company">Brainery Spot Technology</span>
-                                </div>
-                                <span class="intern-location">Coimbatore, India</span>
-                                <p class="intern-desc">Trained on backend Java application frameworks, debugging structures, documentation formatting, and database setup modules.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/internships&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Line: Membership Section (End of Resume) -->
-                    <div class="editor-line section-header-line" id="sec-membership">
-                        <div class="code-block">
-                            <span class="tag">&lt;memberships&gt;</span>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="membership-wrapper">
-                            <div class="member-card code-style-panel border-glow">
-                                <span class="member-icon">🛡️</span>
-                                <h3>Coding Club Join Security</h3>
-                                <p>Configured entry security validation mechanisms and student database registrations for coding club events.</p>
-                            </div>
-                            <div class="member-card code-style-panel border-glow">
-                                <span class="member-icon">🎨</span>
-                                <h3>Invitation Designs for Coding Club</h3>
-                                <p>Created original graphics layouts and modern invitation cards for college coding symposiums.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="editor-line">
-                        <div class="code-block">
-                            <span class="tag">&lt;/memberships&gt;</span>
-                        </div>
-                    </div>
-
-                    <!-- Terminal Panel Mockup at the bottom of Editor workspace -->
-                    <div class="ide-terminal">
-                        <div class="terminal-header">
-                            <span class="term-tab active">💻 Terminal</span>
-                            <span class="term-tab">Output</span>
-                            <span class="term-tab">Debug Console</span>
-                        </div>
-                        <div class="terminal-body" id="terminal-body">
-                            <div class="term-line welcome">Prathanya Shell v1.0.0. Type "help" to start.</div>
-                            <div id="terminal-history"></div>
-                            <div class="terminal-input-row">
-                                <span class="prompt">guest@prathanya:~$</span>
-                                <input type="text" id="terminal-input" autofocus autocomplete="off" aria-label="Terminal command input">
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="contact-grid">
+                    <a href="tel:9894390455" class="contact-card border-glow">
+                        <div class="card-icon-wrapper">📱</div>
+                        <span class="contact-title">Phone Number</span>
+                        <span class="contact-value">9894390455</span>
+                    </a>
+                    <a href="mailto:Prathanyakp@gmail.com" class="contact-card border-glow">
+                        <div class="card-icon-wrapper">✉️</div>
+                        <span class="contact-title">Email Address</span>
+                        <span class="contact-value">Prathanyakp@gmail.com</span>
+                    </a>
+                    <a href="https://github.com/prathanyakp05" target="_blank" rel="noopener noreferrer" class="contact-card border-glow">
+                        <div class="card-icon-wrapper">🐙</div>
+                        <span class="contact-title">GitHub Profile</span>
+                        <span class="contact-value">prathanyakp05</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/prathanya-k-p-a673b9373/" target="_blank" rel="noopener noreferrer" class="contact-card border-glow">
+                        <div class="card-icon-wrapper">💼</div>
+                        <span class="contact-title">LinkedIn Connection</span>
+                        <span class="contact-value">prathanya-k-p</span>
+                    </a>
                 </div>
             </section>
-        </div>
 
-        <!-- IDE Status Bar -->
-        <footer class="ide-statusbar">
-            <div class="sb-left">
-                <span class="sb-item branch-item">🧬 git: main*</span>
-                <span class="sb-item sync-item">↻ Synchronized</span>
-            </div>
-            <div class="sb-right">
-                <span class="sb-item">Ln 1, Col 1</span>
-                <span class="sb-item">Spaces: 2</span>
-                <span class="sb-item">UTF-8</span>
-                <span class="sb-item">JSON</span>
+            <!-- SECTION 2: PROFESSIONAL SUMMARY -->
+            <section id="sec-summary" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">📝</span>
+                    <h2 class="section-heading">Summary</h2>
+                </div>
+                <div class="summary-box border-glow">
+                    <div class="quote-mark">“</div>
+                    <p class="summary-desc">
+                        Aspiring Software Engineer with a strong foundation, and software quality assurance. Passionate about building user-centric high-quality software solutions and use Generative AI and Prompt Engineering to create innovative high-quality software solutions. A quick learner with strong analytical, problem-solving and collaboration skills.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 3: SKILLS -->
+            <section id="sec-skills" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">⚡</span>
+                    <h2 class="section-heading">Skills</h2>
+                </div>
+                <div class="skills-grid">
+                    <!-- Technical Stack Card -->
+                    <div class="skills-card border-glow">
+                        <h3 class="skills-subtitle">💻 Technical Stack</h3>
+                        <div class="skills-list">
+                            <div class="skill-meter">
+                                <div class="sm-info"><span>HTML, CSS, JS</span><span>90%</span></div>
+                                <div class="sm-track"><div class="sm-fill fill-html"></div></div>
+                            </div>
+                            <div class="skill-meter">
+                                <div class="sm-info"><span>JAVA / JAVASCRIPT</span><span>85%</span></div>
+                                <div class="sm-track"><div class="sm-fill fill-java"></div></div>
+                            </div>
+                            <div class="skill-meter">
+                                <div class="sm-info"><span>MYSQL</span><span>80%</span></div>
+                                <div class="sm-track"><div class="sm-fill fill-mysql"></div></div>
+                            </div>
+                            <div class="skill-meter">
+                                <div class="sm-info"><span>Spring Boot</span><span>75%</span></div>
+                                <div class="sm-track"><div class="sm-fill fill-spring"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soft Skills Card -->
+                    <div class="skills-card border-glow center-flex">
+                        <h3 class="skills-subtitle">🤝 Domain & Qualities</h3>
+                        <div class="chips-container">
+                            <div class="soft-chip border-glow">
+                                <span class="chip-emoji">🎯</span>
+                                <span>Strategic Planning</span>
+                            </div>
+                            <div class="soft-chip border-glow">
+                                <span class="chip-emoji">👥</span>
+                                <span>Teamwork</span>
+                            </div>
+                            <div class="soft-chip border-glow">
+                                <span class="chip-emoji">👑</span>
+                                <span>Leadership</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: EDUCATION -->
+            <section id="sec-education" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">🎓</span>
+                    <h2 class="section-heading">Education</h2>
+                </div>
+                <div class="education-timeline">
+                    <!-- Timeline Card 1 -->
+                    <div class="edu-card border-glow">
+                        <div class="edu-header">
+                            <h3 class="edu-institution">🏫 Kongu Engineering College, Perundurai</h3>
+                            <span class="edu-badge">CGPA 7.4</span>
+                        </div>
+                        <p class="edu-details">Computer Systems and Design</p>
+                    </div>
+
+                    <!-- Timeline Card 2 -->
+                    <div class="edu-card border-glow">
+                        <div class="edu-header">
+                            <h3 class="edu-institution">🏫 Higher Secondary School</h3>
+                            <span class="edu-badge">63%</span>
+                        </div>
+                        <p class="edu-details">Green Garden Matric.Hr.Sec.School</p>
+                    </div>
+
+                    <!-- Timeline Card 3 -->
+                    <div class="edu-card border-glow">
+                        <div class="edu-header">
+                            <h3 class="edu-institution">🏫 Secondary School</h3>
+                            <span class="edu-badge">2021 - 2022</span>
+                        </div>
+                        <p class="edu-details">Green Garden Matric.Hr.Sec.School</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: PROJECTS -->
+            <section id="sec-projects" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">💻</span>
+                    <h2 class="section-heading">Featured Projects</h2>
+                </div>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <div class="project-box border-glow">
+                        <div class="p-header-row">
+                            <h3>Real-Time Waste Detection & Alert System</h3>
+                            <span class="p-badge">Java / OpenCV</span>
+                        </div>
+                        <p class="p-desc">An automated environmental surveillance system using image analytics and color threshold grids to detect submerged & floating trash in water resources, triggering localized alerts.</p>
+                        <button class="btn btn-text open-modal-btn" data-project="waste-detection">View Specifications &rarr;</button>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-box border-glow">
+                        <div class="p-header-row">
+                            <h3>Intelligent Invoice Extraction System</h3>
+                            <span class="p-badge">AI / Spring Boot</span>
+                        </div>
+                        <p class="p-desc">A smart parsing pipeline using Generative AI LLM prompts and OCR triggers to capture and structure payment details from raw invoice PDFs directly into databases.</p>
+                        <button class="btn btn-text open-modal-btn" data-project="invoice-extraction">View Specifications &rarr;</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: ADDITIONAL COURSES -->
+            <section id="sec-courses" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">📚</span>
+                    <h2 class="section-heading">Additional Courses</h2>
+                </div>
+                <div class="course-box border-glow">
+                    <div class="course-header-row">
+                        <h3>AI Software Engineer</h3>
+                        <span class="course-badge">6 Months</span>
+                    </div>
+                    <p class="course-sub">Java + AI Course | Blue Ball Technology, Chennai</p>
+                    <p class="course-desc">Rigorous technical bootcamp specializing in Java backend development, Spring architectures, and Generative AI prompts engineering integrations.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 7: PAPER PUBLICATIONS -->
+            <section id="sec-publications" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">📄</span>
+                    <h2 class="section-heading">Paper Publications</h2>
+                </div>
+                <div class="papers-grid">
+                    <div class="paper-card border-glow">
+                        <div class="paper-icon">🏛️</div>
+                        <h3>National Institute of Technology (NIT) Uttarakhand</h3>
+                        <p>Research paper presentation and publication detailing computing concepts and verification methodologies.</p>
+                    </div>
+                    <div class="paper-card border-glow">
+                        <div class="paper-icon">🏛️</div>
+                        <h3>KSR College of Engineering, Tamil Nadu</h3>
+                        <p>Research paper publication outlining structural designs, logical algorithms, and database setup modules.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 8: INTERNSHIPS -->
+            <section id="sec-internships" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">💼</span>
+                    <h2 class="section-heading">Internships</h2>
+                </div>
+                <div class="intern-timeline">
+                    <!-- Internship 1 -->
+                    <div class="intern-card border-glow">
+                        <div class="intern-header-row">
+                            <h3>Software Engineer Intern</h3>
+                            <span class="intern-company">Merida Tech Minds, Bangalore</span>
+                        </div>
+                        <p class="intern-desc">Contributed directly to backend engineering API tasks, structured SQL tables, executed test scripts, and conducted QA quality sweeps.</p>
+                    </div>
+
+                    <!-- Internship 2 -->
+                    <div class="intern-card border-glow">
+                        <div class="intern-header-row">
+                            <h3>Technical Intern</h3>
+                            <span class="intern-company">Brainery Spot Technology, Coimbatore</span>
+                        </div>
+                        <p class="intern-desc">Setup development environments, optimized internal systems logs formats, and studied backend frameworks workflows.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 9: MEMBERSHIPS -->
+            <section id="sec-memberships" class="portfolio-section fade-in-section">
+                <div class="section-title-wrapper">
+                    <span class="section-emoji">🎖️</span>
+                    <h2 class="section-heading">Memberships</h2>
+                </div>
+                <div class="members-grid">
+                    <div class="member-box border-glow">
+                        <div class="m-icon-wrapper">🛡️</div>
+                        <h3>Coding Club Join Security</h3>
+                        <p>Developed registration verification gates and club join approval guidelines for student groups.</p>
+                    </div>
+                    <div class="member-box border-glow">
+                        <div class="m-icon-wrapper">🎨</div>
+                        <h3>Invitation Designs for Coding Club</h3>
+                        <p>Created layouts, symposium invite designs, and creative banners for coding events.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container footer-container">
+                <p class="copyright">&copy; 2026 Prathanya Panneerselvam. All Rights Reserved.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/prathanyakp05" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/prathanya-k-p-a673b9373/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
             </div>
         </footer>
     </div>
 
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Scroll to Top">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    <!-- Back to Top Trigger -->
+    <button id="back-to-top" class="back-to-top" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
     </button>
 
-    <!-- Project Modal Drawer -->
+    <!-- Specifications Detail Modal -->
     <div id="project-modal" class="modal">
         <div class="modal-backdrop"></div>
-        <div class="modal-content code-style-panel">
+        <div class="modal-content border-glow">
             <button class="modal-close" aria-label="Close modal">×</button>
             <div id="modal-project-details"></div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Custom Alerts Container -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- JS script -->
+    <!-- JavaScript Controller -->
     <script src="script.js"></script>
 </body>
 </html>
